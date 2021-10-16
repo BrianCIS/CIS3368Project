@@ -23,19 +23,6 @@ def api_all():
             users.append(body)
     return jsonify(users)
 
-@app.route('/api/cars', methods=['GET']) #endppoint to get a single car by id
-def api_id():
-    if 'id' in request.args: #only if an id is provided as an argument, proceed
-        id = int(request.args['id'])
-    else:
-        return 'ERROR: No ID provided!'
-    
-    results = [] #resulting car(s) to return
-    for car in cars: 
-        if car['id'] == id:
-            results.append(car)
-    return jsonify(results)
-
 @app.route('/api/profiles', methods=['GET']) #API to get a user from the db table in AWS by id as a JSON response: http://127.0.0.1:5000/api/profiles?id=1
 def api_users_id():
     if 'id' in request.args: #only if an id is provided as an argument, proceed
@@ -53,12 +40,12 @@ def api_users_id():
             results.append(user)
     return jsonify(results)
 
+# http://127.0.0.1:5000/api/adduserprofile
 
 @app.route('/api/adduserprofile', methods=['POST']) #endppoint to add user to profiles table
 def add_profile(): 
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     request_data = request.get_json()
-    newid = int(request_data['id'])
     newfname = request_data['firstname']
     newlname = request_data['lastname']
 
@@ -73,12 +60,56 @@ def add_profile():
 def add_restaurant(): 
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     request_data = request.get_json()
-    newid = int(request_data['id'])
     newrestaurant = request_data['restaurant']
     user_id = request_data['user_id']
     sql = "INSERT INTO restaurants (restaurant, user_id) values('{}', '{}')".format(newrestaurant, user_id)
 
     execute_query(conn, sql)
 
-    return 'POST REQUEST WORKED' 
+    return 'POST REQUEST WORKED'
+
+@app.route('/api/deleterestaurant', methods=['POST'])
+def del_entry():
+     request_data = request.get_json()
+     #user input
+     del_id = request_data['id']
+     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
+     sql = "DELETE FROM ``.`celestial_object` WHERE id = %s" % (del_id)
+     execute_query(conn, sql) 
+     return "<p>POST REQUEST WORK</p>"
+     
+
+@app.route('/api/updateuser', methods=['PUT'])
+def update_guest():
+    conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
+    request_data = request.json
+    user_id = request_data['user_id']
+    new_fname = request_data['first name']
+    new_lname = request_data['last name']
+    sql = """UPDATE guests 
+    SET firstname = "%s", lastname = %s
+    WHERE id = %s """ % (new_lname,new_fname,user_id,)
+    execute_query(conn, sql)
+
+    return "PUT REQUEST WORKS"
+@app.route('/api/updaterest', methods=['PUT'])
+def update_rest():
+    conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
+    request_data = request.json
+    rest_id = request_data['id']
+    sql = """UPDATE restaurant 
+    SET restaurant = "%s" WHERE id = %s """ % (rest_id,rest_id)
+    execute_query(conn, sql)
+
+    return "PUT REQUEST WORKS"
+
+
+@app.route('/api/updaterest', methods=['PUT'])
+def print_name():
+    conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
+    request_data = request.json
+    rest_name = request_data['rest name']
+    sql = ("SELECT * FROM restaurants WHERE restaurant = %s " % (rest_name)
+
+    
 app.run()
