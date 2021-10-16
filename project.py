@@ -13,7 +13,7 @@ app.config["DEBUG"] = True #allow to show errors in browser
 def home():
     return "<h1> WELCOME! </h1>"
 
-@app.route('/api/rests/all', methods=['GET']) 
+@app.route('/api/rests/all', methods=['GET']) # endpoint to print restaurant table in json format: http://127.0.0.1:5000/api/rests/all
 def api_all_rests():
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     sql = "SELECT * FROM restaurants"
@@ -25,24 +25,24 @@ def api_all_rests():
 
 
 
-@app.route('/api/users', methods=['GET']) #API to get a user from the db table in AWS by id as a JSON response: http://127.0.0.1:5000/api/profiles?id=1
+@app.route('/api/users', methods=['GET']) # endpoint to print users table in json format: http://127.0.0.1:5000/api/users
 def api_users_id():
-    if 'id' in request.args: #only if an id is provided as an argument, proceed
+    if 'id' in request.args:
         id = int(request.args['id'])
     else:
         return 'ERROR: No ID provided!'
-
+    
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
-    sql = "SELECT * FROM profiles"
+    sql = "SELECT * FROM users"
+    
     users = execute_read_query(conn, sql)
     results = []
-
     for user in users:
         if user['id'] == id:
             results.append(user)
     return jsonify(results)
 
-@app.route('/api/adduser', methods=['POST']) #endppoint to add user to profiles table
+@app.route('/api/adduser', methods=['POST']) # endppoint to add user to users table
 def add_user(): 
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     request_data = request.get_json()
@@ -53,9 +53,11 @@ def add_user():
     return 'POST REQUEST WORKED'
 
 
-@app.route('/api/addrestaurant', methods=['POST']) #endppoint to add user to profiles table
+@app.route('/api/addrestaurant', methods=['POST']) # endppoint to add restaurant to restaurants table
 def add_restaurant(): 
-    if 'user_id' in request.args: #only if an id is provided as an argument, proceed
+    if 'user_id' in request.args: 
+        # proceeds only if an id is provided as an argument, pulls user_id from http://127.0.0.1:5000/api/users?id=1 
+        # and adds to user_id column of restaurants table
         user_id = int(request.args['user_id'])
     else:
         return 'ERROR: No ID provided!'
@@ -64,8 +66,9 @@ def add_restaurant():
     request_data = request.get_json()
     
 
-    for i in request_data:
+    for i in request_data: # for each restaurant entry, inserts into restaurant table with user_id from url 
         sql = "INSERT INTO restaurants (restaurant, user_id) values('{}', '{}')".format(i['restaurant'], user_id)
+        # user_id column linked to users table id column with foreign key
         #print (i)
         execute_query(conn, sql)
 
