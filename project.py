@@ -25,8 +25,8 @@ def api_all_rests():
 
 
 
-@app.route('/api/users', methods=['GET']) # endpoint to print users table in json format: http://127.0.0.1:5000/api/users
-def api_users_id():
+@app.route('/api/users/all', methods=['GET']) # endpoint to output users table in json format at http://127.0.0.1:5000/api/users
+def api_all_users():
     if 'id' in request.args:
         id = int(request.args['id'])
     else:
