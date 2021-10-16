@@ -11,7 +11,7 @@ app.config["DEBUG"] = True #allow to show errors in browser
 
 @app.route('/', methods=['GET']) # default url without any routing as GET request
 def home():
-    return "<h1> WELCOME TO OUR RESTAURANT! </h1>"
+    return "<h1> WELCOME! </h1>"
 
 @app.route('/api/rests/all', methods=['GET']) 
 def api_all_rests():
