@@ -129,7 +129,8 @@ def select_users():
 def random_rest():
     users=[]
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
-    # coded with intent to provided a random restaurant from given user ids that were given in selectuser api, if code ran as intended
+    # coded with intent to provided a random restaurant from given user ids that were given in selectuser api, if code ran as intended, 
+    # unable to implement our logic into code appropriately 
     sql= "SELECT * FROM restaurants WHERE user_id IN (%s) ORDER BY RAND() LIMIT 1;" % (users)
     execute_query(conn, sql)
     return jsonify(sql)
