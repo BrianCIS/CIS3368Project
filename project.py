@@ -27,7 +27,7 @@ def api_all_rests():
     return jsonify(users)
 
 
-@app.route('/api/users/all', methods=['GET']) # endpoint to output users table in json format 
+@app.route('/api/users/all', methods=['GET']) # endpoint to output users table in json format at http://127.0.0.1:5000/api/users
 def api_all_users():
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     sql = "SELECT * FROM users"
