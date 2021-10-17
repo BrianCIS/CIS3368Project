@@ -16,7 +16,7 @@ app.config["DEBUG"] = True #allow to show errors in browser
 def home():
     return "<h1> WELCOME! </h1>"
 
-@app.route('/api/rests/all', methods=['GET']) # endpoint to print restaurant table in json format: http://127.0.0.1:5000/api/rests/all
+@app.route('/api/rests/all', methods=['GET']) # endpoint to print restaurant table in json format
 def api_all_rests():
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     sql = "SELECT * FROM restaurants"
@@ -27,25 +27,17 @@ def api_all_rests():
     return jsonify(users)
 
 
-
-@app.route('/api/users/all', methods=['GET']) # endpoint to output users table in json format at http://127.0.0.1:5000/api/users
+@app.route('/api/users/all', methods=['GET']) # endpoint to output users table in json format 
 def api_all_users():
-    if 'id' in request.args:
-        id = int(request.args['id'])
-    else:
-        return 'ERROR: No ID provided!'
-    
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     sql = "SELECT * FROM users"
-    
     users = execute_read_query(conn, sql)
     results = []
     for user in users:
-        if user['id'] == id:
             results.append(user)
     return jsonify(results)
 
-@app.route('/api/adduser', methods=['POST']) # endppoint to add user to users table at http://127.0.0.1:5000/api/users
+@app.route('/api/adduser', methods=['POST']) # endppoint to add user to users table 
 def add_user(): 
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     request_data = request.get_json()
@@ -56,11 +48,11 @@ def add_user():
     return 'POST REQUEST WORKED'
 
 
-@app.route('/api/addrestaurant', methods=['POST']) # endppoint to add restaurant to restaurants table at http://127.0.0.1:5000/api/addrestaurant
+@app.route('/api/addrestaurant', methods=['POST']) # endppoint to add restaurant to restaurants table 
 def add_restaurant(): 
     if 'user_id' in request.args: 
         # proceeds only if an id is provided as an argument, pulls user_id from http://127.0.0.1:5000/api/users?id=1 
-        # and adds to user_id column of restaurants table
+        # for user_id column of restaurants table
         user_id = int(request.args['user_id'])
     else:
         return 'ERROR: No ID provided!'
