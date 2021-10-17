@@ -45,7 +45,7 @@ def api_all_users():
             results.append(user)
     return jsonify(results)
 
-@app.route('/api/adduser', methods=['POST']) # endppoint to add user to users table
+@app.route('/api/adduser', methods=['POST']) # endppoint to add user to users table at http://127.0.0.1:5000/api/users
 def add_user(): 
     conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
     request_data = request.get_json()
@@ -56,7 +56,7 @@ def add_user():
     return 'POST REQUEST WORKED'
 
 
-@app.route('/api/addrestaurant', methods=['POST']) # endppoint to add restaurant to restaurants table
+@app.route('/api/addrestaurant', methods=['POST']) # endppoint to add restaurant to restaurants table at http://127.0.0.1:5000/api/addrestaurant
 def add_restaurant(): 
     if 'user_id' in request.args: 
         # proceeds only if an id is provided as an argument, pulls user_id from http://127.0.0.1:5000/api/users?id=1 
