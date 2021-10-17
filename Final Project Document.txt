@@ -2,4 +2,7 @@ Jai Kapoor
 -Collaborated on most material but specifically worked on crud functions for endpoints regarding user information. Frequently worked with each on areas of concern/difficulty such as formatting and table creation. 
 
 Brian Rivera
+-Created the user table 
+- Created the CRUD API operations for the user table
+- Created the random restaurant api 
 
