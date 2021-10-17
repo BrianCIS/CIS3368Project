@@ -114,5 +114,18 @@ def update_rest():
     execute_query(conn, sql)
     return "PUT REQUEST WORKS"
 
+@app.route('/api/selectusers', methods=['POST'])
+def select_users():
+    request_data = request.get_json()
+    return jsonify(request_data)
+
+
+@app.route('/api/random', methods=['GET'])
+def random_rest():
+    users=[]
+    conn = create_connection("cis3368.cpnrvwg2unom.us-east-1.rds.amazonaws.com", "myadmin", "qakgu6-wovcaf-subXax", "cis3368fall21")
+    sql= "SELECT * FROM restaurants WHERE user_id IN (%s) ORDER BY RAND() LIMIT 1;" % (users)
+    execute_query(conn, sql)
+    return jsonify(sql)
 
 app.run()
