@@ -1,11 +1,13 @@
-
-
+Tasks distributed through meetings whilst designing project.  
 
 Jai Kapoor
--Collaborated on most material but specifically worked on crud functions for endpoints regarding user information. Frequently worked with each on areas of concern/difficulty such as formatting and table creation. 
+- Created crud functions restaurant information
+- Created restaurant api's
+- Created restaurant table with foreign key
+- Frequently collaborated when facing difficulty
 
 Brian Rivera
--Created the user table 
+- Created the user table 
 - Created the CRUD API operations for the user table
 - Created the random restaurant api 
 - Create references on github
