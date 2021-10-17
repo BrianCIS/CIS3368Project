@@ -67,7 +67,11 @@ def add_restaurant():
     for i in request_data: # for each request data restaurant information is added to restaurant table for specific user
         sql = "INSERT INTO restaurants (restaurant, user_id) values('{}', '{}')".format(i['restaurant'], user_id)
         execute_query(conn, sql)
-
+#we were not able to make if statement work correctly
+        #if len(request_data) not in range (5,11):
+            #return 'check amount of restaurants entered must be between 5 and 10'
+           #elif in range (5,11):
+             #submit query
     return 'POST REQUEST WORKED'
 
 @app.route('/api/deleteuser', methods=['DELETE']) # endpoint to delete user from users table 
