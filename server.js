@@ -30,7 +30,7 @@ app.get('/users', (req, res) => {
     console.log
     axios.get('http://127.0.0.1:5000/api/users/all')// inserts the user input into api url to get he data
         .then(response => {
-        var results =response.data?.results; // gets the results from the api in the apporiate format
+        var results =response.data; // gets the results from the api in the apporiate format
         
         console.log(results);
         res.render('pages/index', { //renders the index page where the results are as well as tagline
