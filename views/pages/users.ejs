@@ -11,7 +11,7 @@
     <main>
         <div>Add new user</div>
         <div class="jumbotron">
-             <form>
+             <form action="/adduser" method="post" class="jumbotron">
                 
                 <div class="form-group">
                     <label for="firstname" class="form-label"></label>
@@ -24,7 +24,7 @@
 
              </form>
              <div>Edit user</div>
-            <form action="/processdynamicform" method="post" class="jumbotron">
+             <form action="/processdynamicform" method="post" class="jumbotron">
                 
                 <% results.forEach(function(user) { %>
                     <div>ID: <%= user.user_id;%></div>
