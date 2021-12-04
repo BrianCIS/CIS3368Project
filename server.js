@@ -53,7 +53,19 @@ app.get('/rests', (req, res) => {
         })
       });
  
-
+app.post('/process', (req, res) => {
+   
+    axios.post('http://127.0.0.1:5000/api/adduser', { firstname: req.body.firstname, lastname: req.body.lastname })
+    .then((response)=>{
+      var restlist = response.data;
+      console.log(restlist);
+      res.render('pages/users', { //renders the index page where the results are as well as tagline
+        results: results
+      });
+// Now we will execute the results in the page named thanks
+  });
+});
+    
 
   
 
